@@ -10,6 +10,132 @@ except ImportError:
     levels = []  # Provide a fallback or handle the error appropriately
 
 class Game:
+    def show_pause_screen(self):
+        """Pause menüsü"""
+        overlay = pygame.Surface((WIDTH, HEIGHT))
+        overlay.set_alpha(150)
+        overlay.fill(BLACK)
+        self.screen.blit(overlay, (0, 0))
+
+        resume = self.font.render("Resume", True, WHITE)
+        restart = self.font.render("Restart Level", True, WHITE)
+        main_menu = self.font.render("Main Menu", True, WHITE)
+
+        resume_rect = resume.get_rect(center=(WIDTH//2, HEIGHT//2 - 40))
+        restart_rect = restart.get_rect(center=(WIDTH//2, HEIGHT//2))
+        main_menu_rect = main_menu.get_rect(center=(WIDTH//2, HEIGHT//2 + 40))
+
+        selected = "resume"
+
+        paused = True
+        while paused and self.paused:
+            self.clock.tick(FPS)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    paused = False
+                    self.running = False
+                    self.paused = False
+
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_DOWN:
+                        if selected == "resume": selected = "restart"
+                        elif selected == "restart": selected = "main_menu"
+                    elif event.key == pygame.K_UP:
+                        if selected == "main_menu": selected = "restart"
+                        elif selected == "restart": selected = "resume"
+                    elif event.key == pygame.K_RETURN:
+                        if selected == "resume":
+                            self.paused = False
+                            paused = False
+                        elif selected == "restart":
+                            self.deaths += 1
+                            self.load_level(self.current_level)
+                            self.paused = False
+                            paused = False
+                        elif selected == "main_menu":
+                            self.paused = False
+                            paused = False
+                            self.playing = False
+                            self.show_main_menu()
+
+            # Seçimi renklendir
+            resume = self.font.render("Resume", True, YELLOW if selected == "resume" else WHITE)
+            restart = self.font.render("Restart Level", True, YELLOW if selected == "restart" else WHITE)
+            main_menu = self.font.render("Main Menu", True, YELLOW if selected == "main_menu" else WHITE)
+
+            self.screen.blit(overlay, (0, 0))
+            self.screen.blit(resume, resume_rect)
+            self.screen.blit(restart, restart_rect)
+            self.screen.blit(main_menu, main_menu_rect)
+            pygame.display.flip()
+
+    def run(self):
+        """Oyun döngüsü"""
+        self.playing = True
+        while self.playing:
+            if self.paused:
+                self.show_pause_screen()
+            else:
+                self.clock.tick(FPS)
+                self.events()
+                self.update()
+                self.draw()
+
+    def __init__(self):
+        ...
+        self.paused = False
+      
+
+    def show_main_menu(self):
+        """Ana menü ekranı"""
+        self.screen.blit(self.background, (0, 0))
+        
+        title = self.font.render("LEVEL DEVIL", True, YELLOW)
+        start = self.font.render("Start Game", True, WHITE)
+        exit_game = self.font.render("Exit", True, WHITE)
+        
+        title_rect = title.get_rect(center=(WIDTH//2, HEIGHT//4))
+        start_rect = start.get_rect(center=(WIDTH//2, HEIGHT//2))
+        exit_rect = exit_game.get_rect(center=(WIDTH//2, HEIGHT//2 + 50))
+
+        selected = "start"
+
+        waiting = True
+        while waiting:
+            self.clock.tick(FPS)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    waiting = False
+                    self.running = False
+
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_DOWN:
+                        selected = "exit"
+                    elif event.key == pygame.K_UP:
+                        selected = "start"
+                    elif event.key == pygame.K_RETURN:
+                        if selected == "start":
+                            waiting = False
+                            self.new_game()
+                            self.run()
+                        elif selected == "exit":
+                            pygame.quit()
+                            sys.exit()
+
+            # Renk değişimleri ile seçim görseli
+            if selected == "start":
+                start = self.font.render("Start Game", True, YELLOW)
+                exit_game = self.font.render("Exit", True, WHITE)
+            else:
+                start = self.font.render("Start Game", True, WHITE)
+                exit_game = self.font.render("Exit", True, YELLOW)
+
+            self.screen.blit(self.background, (0, 0))
+            self.screen.blit(title, title_rect)
+            self.screen.blit(start, start_rect)
+            self.screen.blit(exit_game, exit_rect)
+            pygame.display.flip()
+
     def __init__(self):
         pygame.init()
         pygame.mixer.init()  
@@ -106,6 +232,8 @@ class Game:
                 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
+                    # if event.key == pygame.K_ESCAPE:
+                    # self.paused = not self.paused
                     self.player.jump()
                     self.jump_sound.play()
                 if event.key == pygame.K_r:
@@ -114,7 +242,8 @@ class Game:
                     self.load_level(self.current_level)
                 if event.key == pygame.K_ESCAPE:
                     # Oyunu durdur ve ana menüye dön
-                    self.playing = False
+                    self.paused = not self.paused  # Sadece ESCAPE durumunda pause
+                    # self.playing = False
                     
     def update(self):
         """Oyun dünyasını güncelle"""
@@ -204,7 +333,7 @@ class Game:
                 if event.type == pygame.QUIT:
                     waiting = False
                     self.running = False
-                if event.type == pygame.KEYUP:
+                if event.type == pygame.KEYDOWN:
                     waiting = False
                     
     def show_game_over_screen(self):
@@ -237,12 +366,16 @@ class Game:
 # Oyunu başlat
 if __name__ == "__main__":
     game = Game()
-    game.show_start_screen()
+    # game.show_start_screen()
+    game.show_main_menu()  # önce ana menü
+
     
     while game.running:
         game.new_game()
         if game.game_over:
             game.show_game_over_screen()
+            game.game_over = False
+            game.show_main_menu()
             
     pygame.quit()
     sys.exit()
