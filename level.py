@@ -60,11 +60,11 @@ levels = [
         'player_pos': (50, HEIGHT - 100),
         'platforms': [
             (0, HEIGHT - 40, WIDTH, 40),  # Zemin
-            (100, HEIGHT - 150, 60, 20),  # Platform 1
-            (250, HEIGHT - 150, 60, 20),  # Platform 2
-            (400, HEIGHT - 150, 60, 20),  # Platform 3
-            (550, HEIGHT - 150, 60, 20),  # Platform 4
-            (700, HEIGHT - 150, 60, 20),  # Platform 5
+            (100, HEIGHT - 250, 60, 20),  # Platform 1
+            (250, HEIGHT - 250, 60, 20),  # Platform 2
+            (400, HEIGHT - 250, 60, 20),  # Platform 3
+            (550, HEIGHT - 250, 60, 20),  # Platform 4
+            (700, HEIGHT - 250, 60, 20),  # Platform 5
             
             (150, HEIGHT - 300, 60, 20),  # Platform 6
             (300, HEIGHT - 300, 60, 20),  # Platform 7
@@ -74,10 +74,10 @@ levels = [
             (50, HEIGHT - 450, 700, 20),  # Platform 10
         ],
         'obstacles': [
-            (175, HEIGHT - 150, 60, 20),  # Engel 1
-            (325, HEIGHT - 150, 60, 20),  # Engel 2
-            (475, HEIGHT - 150, 60, 20),  # Engel 3
-            (625, HEIGHT - 150, 60, 20),  # Engel 4
+            (175, HEIGHT - 250, 60, 20),  # Engel 1
+            (325, HEIGHT - 250, 60, 20),  # Engel 2
+            (475, HEIGHT - 250, 60, 20),  # Engel 3
+            (625, HEIGHT - 250, 60, 20),  # Engel 4
             
             (225, HEIGHT - 300, 60, 20),  # Engel 5
             (375, HEIGHT - 300, 60, 20),  # Engel 6
