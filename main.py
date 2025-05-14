@@ -235,7 +235,7 @@ class Game:
                     # if event.key == pygame.K_ESCAPE:
                     # self.paused = not self.paused
                     self.player.jump()
-                    self.jump_sound.play()
+                    #self.jump_sound.play()
                 if event.key == pygame.K_r:
                     # Seviyeyi yeniden başlat
                     self.deaths += 1
@@ -266,7 +266,7 @@ class Game:
         # Oyuncu ile engel çarpışmalarını kontrol et
         hits = pygame.sprite.spritecollide(self.player, self.obstacles, False)
         if hits:
-            self.death_sound.play()
+            #self.death_sound.play()
             self.deaths += 1
             self.load_level(self.current_level)
             
@@ -274,7 +274,7 @@ class Game:
         hits = pygame.sprite.spritecollide(self.player, self.collectibles, True)
         for hit in hits:
             self.score += 10
-            self.collect_sound.play()
+            #self.collect_sound.play()
             
         # Bitiş noktasına ulaşmayı kontrol et
         if abs(self.player.pos.x - self.finish_pos[0]) < 20 and abs(self.player.pos.y - self.finish_pos[1]) < 20:
@@ -288,7 +288,7 @@ class Game:
                 
         # Ekrandan düşmeyi kontrol et
         if self.player.pos.y > HEIGHT:
-            self.death_sound.play()
+            #self.death_sound.play()
             self.deaths += 1
             self.load_level(self.current_level)
             
