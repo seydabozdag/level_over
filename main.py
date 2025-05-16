@@ -90,7 +90,8 @@ class Game:
         """Ana menü ekranı"""
         self.screen.blit(self.background, (0, 0))
         
-        title = self.font.render("LEVEL DEVIL", True, YELLOW)
+        title = self.font.render("LEVEL DEVIL", True, RED)
+        title = pygame.transform.scale(title, (title.get_width() * 2, title.get_height() * 2))
         start = self.font.render("Start Game", True, WHITE)
         exit_game = self.font.render("Exit", True, WHITE)
         
@@ -116,8 +117,7 @@ class Game:
                     elif event.key == pygame.K_RETURN:
                         if selected == "start":
                             waiting = False
-                            self.new_game()
-                            self.run()
+                            self.new_game()  # <-- keep this
                         elif selected == "exit":
                             pygame.quit()
                             sys.exit()
@@ -354,8 +354,8 @@ class Game:
         self.screen.blit(self.background, (0, 0))
         
         title = self.font.render("GAME OVER", True, RED)
-        score_text = self.font.render(f"Final Score: {self.score}", True, WHITE)
-        deaths_text = self.font.render(f"Total Deaths: {self.deaths}", True, WHITE)
+        score_text = self.font.render(f"Final Score: {self.score}", True, BLACK)
+        deaths_text = self.font.render(f"Total Deaths: {self.deaths}", True, BLACK)
         restart_text = self.font.render("Press any key to restart", True, WHITE)
         
         self.screen.blit(title, (WIDTH // 2 - title.get_width() // 2, HEIGHT // 4))
@@ -379,16 +379,16 @@ class Game:
 # Oyunu başlat
 if __name__ == "__main__":
     game = Game()
-    # game.show_start_screen()
-    game.show_main_menu()  # önce ana menü
+    show_menu = True
 
-    
     while game.running:
-        game.new_game()
+        if show_menu:
+            game.show_main_menu()
+            show_menu = False
         if game.game_over:
             game.show_game_over_screen()
             game.game_over = False
-            game.show_main_menu()
-            
+            show_menu = True  # Show menu after game over
+
     pygame.quit()
     sys.exit()
