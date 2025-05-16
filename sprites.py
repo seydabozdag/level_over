@@ -3,6 +3,39 @@ import os
 from settings import *
 vec = pygame.math.Vector2
 
+class Chest(pygame.sprite.Sprite):
+    def __init__(self, x, y):
+        super().__init__()
+        self.spritesheet = SpriteSheet(os.path.join('assets', 'chest.png'))  # Sandık sprite sheet
+
+        # Animasyon kareleri (örneğe göre ayarla)
+        self.frames = [
+            self.spritesheet.get_image(0, 0, 32, 32),   # kapalı
+            self.spritesheet.get_image(32, 0, 32, 32),  # açılıyor 1
+            self.spritesheet.get_image(64, 0, 32, 32),  # açılıyor 2
+            self.spritesheet.get_image(96, 0, 32, 32),  # tam açık
+        ]
+        
+        self.image = self.frames[0]
+        self.rect = self.image.get_rect()
+        self.rect.center = (x, y)
+
+        self.frame_index = 0
+        self.last_update = pygame.time.get_ticks()
+        self.opened = False
+
+    def update(self):
+        """Sandık animasyonu"""
+        if not self.opened:
+            now = pygame.time.get_ticks()
+            if now - self.last_update > 100:  # Her 100ms'de bir kare değiştir
+                self.last_update = now
+                self.frame_index += 1
+                if self.frame_index >= len(self.frames):
+                    self.frame_index = len(self.frames) - 1
+                    self.opened = True
+                self.image = self.frames[self.frame_index]
+
 class SpriteSheet:
     """Sprite sheet sınıfı animasyonlar için"""
     def __init__(self, filename):
@@ -227,6 +260,7 @@ class Obstacle(pygame.sprite.Sprite):
         self.rect.y = y
         
 class Collectible(pygame.sprite.Sprite):
+
     def __init__(self, x, y, type="coin"):
         pygame.sprite.Sprite.__init__(self)
         
