@@ -90,7 +90,8 @@ class Game:
         """Ana menü ekranı"""
         self.screen.blit(self.background, (0, 0))
         
-        title = self.font.render("LEVEL DEVIL", True, YELLOW)
+        title = self.font.render("LEVEL DEVIL", True, RED)
+        title = pygame.transform.scale(title, (title.get_width() * 2, title.get_height() * 2))
         start = self.font.render("Start Game", True, WHITE)
         exit_game = self.font.render("Exit", True, WHITE)
         
@@ -116,8 +117,7 @@ class Game:
                     elif event.key == pygame.K_RETURN:
                         if selected == "start":
                             waiting = False
-                            self.new_game()
-                            self.run()
+                            self.new_game()  # <-- keep this
                         elif selected == "exit":
                             pygame.quit()
                             sys.exit()
@@ -210,8 +210,12 @@ class Game:
             self.all_sprites.add(c)
             self.collectibles.add(c)
             
-        # Bitiş noktasını ayarla
+        # # Bitiş noktasını ayarla
         self.finish_pos = level_data['finish_pos']
+
+        # # Bitiş sandığını oluştur
+        # self.chest = Chest(*level_data['finish_pos'])
+        # self.all_sprites.add(self.chest)
         
     def run(self):
         """Oyun döngüsü"""
@@ -286,6 +290,15 @@ class Game:
                 self.game_over = True
                 self.playing = False
                 
+        # # Bitiş sandığına ulaşmayı kontrol et
+        # if self.chest.opened:  # Eğer sandık açıldıysa
+        #     self.current_level += 1
+        #     if self.current_level < len(levels):
+        #         self.load_level(self.current_level)
+        #     else:
+        #         self.game_over = True
+        #         self.playing = False
+                
         # Ekrandan düşmeyi kontrol et
         if self.player.pos.y > HEIGHT:
             self.death_sound.play()
@@ -298,8 +311,8 @@ class Game:
         self.all_sprites.draw(self.screen)
         
         # Bitiş noktasını çiz
-        pygame.draw.rect(self.screen, GREEN, 
-                         (self.finish_pos[0] - 15, self.finish_pos[1] - 15, 30, 30))
+        # pygame.draw.rect(self.screen, GREEN, 
+        #                  (self.finish_pos[0] - 15, self.finish_pos[1] - 15, 30, 30))
         
         # Skor ve ölüm sayısını göster
         score_text = self.font.render(f"Score: {self.score}", True, WHITE)
@@ -341,8 +354,8 @@ class Game:
         self.screen.blit(self.background, (0, 0))
         
         title = self.font.render("GAME OVER", True, RED)
-        score_text = self.font.render(f"Final Score: {self.score}", True, WHITE)
-        deaths_text = self.font.render(f"Total Deaths: {self.deaths}", True, WHITE)
+        score_text = self.font.render(f"Final Score: {self.score}", True, BLACK)
+        deaths_text = self.font.render(f"Total Deaths: {self.deaths}", True, BLACK)
         restart_text = self.font.render("Press any key to restart", True, WHITE)
         
         self.screen.blit(title, (WIDTH // 2 - title.get_width() // 2, HEIGHT // 4))
@@ -366,17 +379,17 @@ class Game:
 # Oyunu başlat
 if __name__ == "__main__":
     game = Game()
-    # game.show_start_screen()
-    game.show_main_menu()  # önce ana menü
+    show_menu = True
 
-    
     while game.running:
-        game.new_game()
+        if show_menu:
+            game.show_main_menu()
+            show_menu = False
         if game.game_over:
             game.show_game_over_screen()
             
             game.game_over = False
-            game.show_main_menu()
-            
+            show_menu = True  # Show menu after game over
+
     pygame.quit()
     sys.exit()

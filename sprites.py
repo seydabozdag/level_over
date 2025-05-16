@@ -3,6 +3,39 @@ import os
 from settings import *
 vec = pygame.math.Vector2
 
+# class Chest(pygame.sprite.Sprite):
+#     def __init__(self, x, y):
+#         super().__init__()
+#         self.spritesheet = SpriteSheet(os.path.join('assets', 'chest.png'))  # Sandık sprite sheet
+
+#         # Animasyon kareleri (örneğe göre ayarla)
+#         self.frames = [
+#             self.spritesheet.get_image(0, 0, 32, 32),   # kapalı
+#             self.spritesheet.get_image(32, 0, 32, 32),  # açılıyor 1
+#             self.spritesheet.get_image(64, 0, 32, 32),  # açılıyor 2
+#             self.spritesheet.get_image(96, 0, 32, 32),  # tam açık
+#         ]
+        
+#         self.image = self.frames[0]
+#         self.rect = self.image.get_rect()
+#         self.rect.center = (x, y)
+
+#         self.frame_index = 0
+#         self.last_update = pygame.time.get_ticks()
+#         self.opened = False
+
+    # def update(self):
+    #     """Sandık animasyonu"""
+    #     if not self.opened:
+    #         now = pygame.time.get_ticks()
+    #         if now - self.last_update > 100:  # Her 100ms'de bir kare değiştir
+    #             self.last_update = now
+    #             self.frame_index += 1
+    #             if self.frame_index >= len(self.frames):
+    #                 self.frame_index = len(self.frames) - 1
+    #                 self.opened = True
+    #             self.image = self.frames[self.frame_index]
+
 class SpriteSheet:
     """Sprite sheet sınıfı animasyonlar için"""
     def __init__(self, filename):
@@ -24,15 +57,29 @@ class Player(pygame.sprite.Sprite):
         
         # Animasyon kareleri
         self.standing_frames = [
-            self.spritesheet.get_image(0, 0, 32, 32),
-            self.spritesheet.get_image(32, 0, 32, 32)
+            pygame.transform.scale(self.spritesheet.get_image(0, 0, 32, 32), (48,48)),
+            pygame.transform.scale(self.spritesheet.get_image(32, 0, 32, 32), (48,48)),
+            pygame.transform.scale(self.spritesheet.get_image(64, 0, 32, 32), (48,48)),
+            pygame.transform.scale(self.spritesheet.get_image(96, 0, 32, 32), (48,48)),
         ]
         
         self.walk_frames_r = [
-            self.spritesheet.get_image(0, 32, 32, 32),
-            self.spritesheet.get_image(32, 32, 32, 32),
-            self.spritesheet.get_image(64, 32, 32, 32),
-            self.spritesheet.get_image(96, 32, 32, 32)
+            pygame.transform.scale(self.spritesheet.get_image(0, 64, 32, 32), (48, 48)),
+            pygame.transform.scale(self.spritesheet.get_image(32, 64, 32, 32), (48, 48)),
+            pygame.transform.scale(self.spritesheet.get_image(64, 64, 32, 32), (48, 48)),
+            pygame.transform.scale(self.spritesheet.get_image(96, 64, 32, 32), (48, 48)),
+            pygame.transform.scale(self.spritesheet.get_image(128, 64, 32, 32), (48, 48)),
+            pygame.transform.scale(self.spritesheet.get_image(160, 64, 32, 32), (48, 48)),
+            pygame.transform.scale(self.spritesheet.get_image(192, 64, 32, 32), (48, 48)),
+            pygame.transform.scale(self.spritesheet.get_image(224, 64, 32, 32), (48, 48)),
+            pygame.transform.scale(self.spritesheet.get_image(0, 96, 32, 32), (48, 48)),
+            pygame.transform.scale(self.spritesheet.get_image(32, 96, 32, 32), (48, 48)),
+            pygame.transform.scale(self.spritesheet.get_image(64, 96, 32, 32), (48, 48)),
+            pygame.transform.scale(self.spritesheet.get_image(96, 96, 32, 32), (48, 48)),
+            pygame.transform.scale(self.spritesheet.get_image(128, 96, 32, 32), (48, 48)),
+            pygame.transform.scale(self.spritesheet.get_image(160, 96, 32, 32), (48, 48)),
+            pygame.transform.scale(self.spritesheet.get_image(192, 96, 32, 32), (48, 48)),
+            pygame.transform.scale(self.spritesheet.get_image(224, 96, 32, 32), (48, 48)),
         ]
         
         self.walk_frames_l = []
@@ -40,6 +87,29 @@ class Player(pygame.sprite.Sprite):
             self.walk_frames_l.append(pygame.transform.flip(frame, True, False))
             
         self.jump_frame = self.spritesheet.get_image(0, 64, 32, 32)
+        self.jump_frame = pygame.transform.scale(self.jump_frame, (48, 48))
+        
+        self.jump_frames_r = [
+            pygame.transform.scale(self.spritesheet.get_image(0, 160, 32, 32), (48, 48)),
+            pygame.transform.scale(self.spritesheet.get_image(32, 160, 32, 32), (48, 48)),
+            pygame.transform.scale(self.spritesheet.get_image(64, 160, 32, 32), (48, 48)),
+            pygame.transform.scale(self.spritesheet.get_image(96, 160, 32, 32), (48, 48)),
+            pygame.transform.scale(self.spritesheet.get_image(128, 160, 32, 32), (48, 48)),
+            pygame.transform.scale(self.spritesheet.get_image(160, 160, 32, 32), (48, 48)),
+            pygame.transform.scale(self.spritesheet.get_image(192, 160, 32, 32), (48, 48)),
+            pygame.transform.scale(self.spritesheet.get_image(224, 160, 32, 32), (48, 48)),
+            pygame.transform.scale(self.spritesheet.get_image(0, 160, 32, 32), (48, 48)),
+            pygame.transform.scale(self.spritesheet.get_image(32, 160, 32, 32), (48, 48)),
+            pygame.transform.scale(self.spritesheet.get_image(64, 160, 32, 32), (48, 48)),
+            pygame.transform.scale(self.spritesheet.get_image(96, 160, 32, 32), (48, 48)),
+            pygame.transform.scale(self.spritesheet.get_image(128, 160, 32, 32), (48, 48)),
+            pygame.transform.scale(self.spritesheet.get_image(160, 160, 32, 32), (48, 48)),
+            pygame.transform.scale(self.spritesheet.get_image(192, 160, 32, 32), (48, 48)),
+            pygame.transform.scale(self.spritesheet.get_image(224, 160, 32, 32), (48, 48)),
+        ]
+        self.jump_frames_l = []
+        for frame in self.jump_frames_r:
+            self.jump_frames_l.append(pygame.transform.flip(frame, True, False))
         
         # Başlangıç karesi
         self.image = self.standing_frames[0]
@@ -112,11 +182,36 @@ class Player(pygame.sprite.Sprite):
         else:
             self.walking = False
             
+        
+        
+        
+        if self.jumping and self.walking:
+            if now - self.last_update > 100:  # Her 100ms'de bir kare değiştir
+                self.last_update = now
+                entered_frame = self.current_frame
+                self.current_frame = (self.current_frame +1 ) % len(self.jump_frames_r)
+                
+                if self.vel.x > 0 and self.current_frame-entered_frame<len(self.jump_frames_r):  # Sağa doğru
+                    self.image = self.jump_frames_r[self.current_frame]
+                elif self.current_frame-entered_frame<len(self.jump_frames_r):  # Sola doğru
+                    self.image = self.jump_frames_l[self.current_frame]
+                
+                
+                self.image = self.jump_frame
+                if self.facing_right:
+                    self.image = self.jump_frame
+                else:
+                    self.image = pygame.transform.flip(self.jump_frame, True, False)
+                
+            
+        
+        
+        
         # Yürüme animasyonu
         if self.walking:
             if now - self.last_update > 100:  # Her 100ms'de bir kare değiştir
                 self.last_update = now
-                self.current_frame = (self.current_frame + 1) % len(self.walk_frames_r)
+                self.current_frame = (self.current_frame +1 ) % len(self.walk_frames_r)
                 
                 if self.vel.x > 0:  # Sağa doğru
                     self.image = self.walk_frames_r[self.current_frame]
@@ -132,11 +227,23 @@ class Player(pygame.sprite.Sprite):
                 
         # Zıplama animasyonu
         if self.jumping:
-            self.image = self.jump_frame
-            if self.facing_right:
-                self.image = self.jump_frame
-            else:
-                self.image = pygame.transform.flip(self.jump_frame, True, False)
+            if now - self.last_update > 100:  # Her 100ms'de bir kare değiştir
+                self.last_update = now
+                entered_frame = self.current_frame
+                self.current_frame = (self.current_frame +1 ) % len(self.jump_frames_r)
+                
+                if self.vel.x > 0 and self.current_frame-entered_frame < len(self.jump_frames_r):  # Sağa doğru
+                    self.image = self.jump_frames_r[self.current_frame]
+                elif self.current_frame-entered_frame<len(self.jump_frames_r):  # Sola doğru
+                    self.image = self.jump_frames_l[self.current_frame]
+                else:
+                    self.image = self.jump_frame
+                    if self.facing_right:
+                        self.image = self.jump_frame
+                    else:
+                        self.image = pygame.transform.flip(self.jump_frame, True, False)
+            
+        
 
 class Platform(pygame.sprite.Sprite):
     def __init__(self, x, y, width, height, image_type='default'):
@@ -171,6 +278,7 @@ class Obstacle(pygame.sprite.Sprite):
         self.rect.y = y
         
 class Collectible(pygame.sprite.Sprite):
+
     def __init__(self, x, y, type="coin"):
         pygame.sprite.Sprite.__init__(self)
         
