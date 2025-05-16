@@ -210,8 +210,12 @@ class Game:
             self.all_sprites.add(c)
             self.collectibles.add(c)
             
-        # Bitiş noktasını ayarla
-        self.finish_pos = level_data['finish_pos']
+        # # Bitiş noktasını ayarla
+        # self.finish_pos = level_data['finish_pos']
+
+        # Bitiş sandığını oluştur
+        self.chest = Chest(*level_data['finish_pos'])
+        self.all_sprites.add(self.chest)
         
     def run(self):
         """Oyun döngüsü"""
@@ -277,12 +281,21 @@ class Game:
             self.collect_sound.play()
             
         # Bitiş noktasına ulaşmayı kontrol et
-        if abs(self.player.pos.x - self.finish_pos[0]) < 20 and abs(self.player.pos.y - self.finish_pos[1]) < 20:
+        '''if abs(self.player.pos.x - self.finish_pos[0]) < 20 and abs(self.player.pos.y - self.finish_pos[1]) < 20:
             self.current_level += 1
             if self.current_level < len(levels):
                 self.load_level(self.current_level)
             else:
                 # Oyunu bitir
+                self.game_over = True
+                self.playing = False
+                '''
+        # Bitiş sandığına ulaşmayı kontrol et
+        if self.chest.opened:  # Eğer sandık açıldıysa
+            self.current_level += 1
+            if self.current_level < len(levels):
+                self.load_level(self.current_level)
+            else:
                 self.game_over = True
                 self.playing = False
                 
@@ -298,8 +311,8 @@ class Game:
         self.all_sprites.draw(self.screen)
         
         # Bitiş noktasını çiz
-        pygame.draw.rect(self.screen, GREEN, 
-                         (self.finish_pos[0] - 15, self.finish_pos[1] - 15, 30, 30))
+        # pygame.draw.rect(self.screen, GREEN, 
+        #                  (self.finish_pos[0] - 15, self.finish_pos[1] - 15, 30, 30))
         
         # Skor ve ölüm sayısını göster
         score_text = self.font.render(f"Score: {self.score}", True, WHITE)
