@@ -170,6 +170,8 @@ class Game:
         self.death_sound = pygame.mixer.Sound(os.path.join('assets', 'death.wav'))
         self.collect_sound = pygame.mixer.Sound(os.path.join('assets', 'collect.wav'))
         
+        self.collected_collectibles = {}  # {level_index: set of (x, y, type)}
+        
     def new_game(self):
         """Yeni oyun başlatır"""
         self.score = 0
@@ -205,10 +207,16 @@ class Game:
             self.obstacles.add(o)
             
         # Toplanabilir öğeleri oluştur
-        for col in level_data['collectibles']:
-            c = Collectible(*col)
-            self.all_sprites.add(c)
-            self.collectibles.add(c)
+        # for col in level_data['collectibles']:
+        #     c = Collectible(*col)
+        #     self.all_sprites.add(c)
+        #     self.collectibles.add(c)
+        already_collected = self.collected_collectibles.get(level_index, set())
+        for x, y, ctype in level_data['collectibles']:
+            if (x, y, ctype) not in already_collected:
+                collectible = Collectible(x, y, ctype)
+                self.all_sprites.add(collectible)
+                self.collectibles.add(collectible)
             
         # # Bitiş noktasını ayarla
         self.finish_pos = level_data['finish_pos']
@@ -279,6 +287,11 @@ class Game:
         for hit in hits:
             self.score += 10
             self.collect_sound.play()
+    # Record collected collectible
+            if self.current_level not in self.collected_collectibles:
+                self.collected_collectibles[self.current_level] = set()
+            self.collected_collectibles[self.current_level].add((hit.rect.x, hit.rect.y, "coin"))
+
             
         # Bitiş noktasına ulaşmayı kontrol et
         if abs(self.player.pos.x - self.finish_pos[0]) < 20 and abs(self.player.pos.y - self.finish_pos[1]) < 20:

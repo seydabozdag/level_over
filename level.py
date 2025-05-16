@@ -16,15 +16,15 @@ levels = [
         'player_pos': (50, HEIGHT - 100),
         'platforms': [
             (0, HEIGHT - 40, WIDTH, 40),  # Zemin
-            (300, HEIGHT - 200, 100, 20),  # Platform 1
-            (500, HEIGHT - 300, 100, 20),  # Platform 2
+            (300, HEIGHT - 150, 100, 20),  # Platform 1
+            (500, HEIGHT - 150, 100, 20),  # Platform 2
         ],
         'obstacles': [
             (400, HEIGHT - 60, 40, 20, 'spikes'),  # Engel 1
         ],
         'collectibles': [
-            (350, HEIGHT - 230, "coin"),  # Para 1
-            (550, HEIGHT - 330, "coin"),  # Para 2
+            (350, HEIGHT - 180, "coin"),  # Para 1
+            (550, HEIGHT - 180, "coin"),  # Para 2
         ],
         'finish_pos': (WIDTH - 50, HEIGHT - 60)
     },
