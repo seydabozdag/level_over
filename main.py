@@ -200,7 +200,7 @@ class Game:
             
         # Engelleri oluştur
         for obs in level_data['obstacles']:
-            o = Obstacle(*obs)
+            o = Obstacle(self, *obs)
             self.all_sprites.add(o)
             self.obstacles.add(o)
             
@@ -387,6 +387,7 @@ if __name__ == "__main__":
             show_menu = False
         if game.game_over:
             game.show_game_over_screen()
+            
             game.game_over = False
             show_menu = True  # Show menu after game over
 
