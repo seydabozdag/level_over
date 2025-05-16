@@ -139,19 +139,33 @@ class Player(pygame.sprite.Sprite):
                 self.image = pygame.transform.flip(self.jump_frame, True, False)
 
 class Platform(pygame.sprite.Sprite):
-    def __init__(self, x, y, width, height, color=PLATFORM_COLOR):
-        pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.Surface((width, height))
-        self.image.fill(color)
+    def __init__(self, x, y, width, height, image_type='default'):
+        super().__init__()
+        self.is_ground = (y >= HEIGHT - 40 and width > 100)
+        self._load_image(width, height, image_type)
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-
+    
+    def _load_image(self, width, height, image_type):
+        try:
+            if image_type == 'ground' or self.is_ground:
+                img = pygame.image.load(os.path.join('assets', 'ground.png')).convert_alpha()
+            else:
+                img = pygame.image.load(os.path.join('assets', 'Tile.png')).convert_alpha()
+            self.image = pygame.transform.scale(img, (width, height))
+        except:
+            self.image = pygame.Surface((width, height))
+            
 class Obstacle(pygame.sprite.Sprite):
-    def __init__(self, x, y, width, height, color=RED):
+    def __init__(self, game, x, y, width, height, obstacle_type='spikes'):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.Surface((width, height))
-        self.image.fill(color)
+        self.game = game
+        self.type = obstacle_type
+        
+        self.image = pygame.image.load(os.path.join('assets', f'spikes.png')).convert_alpha()
+        self.image = pygame.transform.scale(self.image, (width, height))
+        
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y

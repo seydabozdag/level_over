@@ -20,7 +20,7 @@ levels = [
             (500, HEIGHT - 300, 100, 20),  # Platform 2
         ],
         'obstacles': [
-            (400, HEIGHT - 60, 40, 20),  # Engel 1
+            (400, HEIGHT - 60, 40, 20, 'spikes'),  # Engel 1
         ],
         'collectibles': [
             (350, HEIGHT - 230, "coin"),  # Para 1
@@ -41,9 +41,9 @@ levels = [
             (200, HEIGHT - 550, 80, 20),  # Platform 5
         ],
         'obstacles': [
-            (300, HEIGHT - 60, 40, 20),  # Engel 1
-            (450, HEIGHT - 370, 40, 20),  # Engel 2
-            (300, HEIGHT - 470, 40, 20),  # Engel 3
+            (300, HEIGHT - 60, 40, 20, 'spikes'),  # Engel 1
+            (450, HEIGHT - 370, 40, 20, 'spikes'),  # Engel 2
+            (300, HEIGHT - 470, 40, 20, 'spikes'),  # Engel 3
         ],
         'collectibles': [
             (230, HEIGHT - 180, "coin"),  # Para 1
@@ -74,22 +74,22 @@ levels = [
             (50, HEIGHT - 450, 700, 20),  # Platform 10
         ],
         'obstacles': [
-            (175, HEIGHT - 250, 60, 20),  # Engel 1
-            (325, HEIGHT - 250, 60, 20),  # Engel 2
-            (475, HEIGHT - 250, 60, 20),  # Engel 3
-            (625, HEIGHT - 250, 60, 20),  # Engel 4
+            (175, HEIGHT - 250, 60, 20, 'spikes'),  # Engel 1
+            (325, HEIGHT - 250, 60, 20, 'spikes'),  # Engel 2
+            (475, HEIGHT - 250, 60, 20, 'spikes'),  # Engel 3
+            (625, HEIGHT - 250, 60, 20, 'spikes'),  # Engel 4
             
-            (225, HEIGHT - 300, 60, 20),  # Engel 5
-            (375, HEIGHT - 300, 60, 20),  # Engel 6
-            (525, HEIGHT - 300, 60, 20),  # Engel 7
+            (225, HEIGHT - 300, 60, 20, 'spikes'),  # Engel 5
+            (375, HEIGHT - 300, 60, 20, 'spikes'),  # Engel 6
+            (525, HEIGHT - 300, 60, 20, 'spikes'),  # Engel 7
             
             # Engelli yol parçaları
-            (150, HEIGHT - 430, 50, 10),  # Engel 8
-            (250, HEIGHT - 430, 50, 10),  # Engel 9
-            (350, HEIGHT - 430, 50, 10),  # Engel 10
-            (450, HEIGHT - 430, 50, 10),  # Engel 11
-            (550, HEIGHT - 430, 50, 10),  # Engel 12
-            (650, HEIGHT - 430, 50, 10),  # Engel 13
+            (150, HEIGHT - 430, 50, 10, 'spikes'),  # Engel 8
+            (250, HEIGHT - 430, 50, 10, 'spikes'),  # Engel 9
+            (350, HEIGHT - 430, 50, 10, 'spikes'),  # Engel 10
+            (450, HEIGHT - 430, 50, 10, 'spikes'),  # Engel 11
+            (550, HEIGHT - 430, 50, 10, 'spikes'),  # Engel 12
+            (650, HEIGHT - 430, 50, 10, 'spikes'),  # Engel 13
         ],
         'collectibles': [
             (130, HEIGHT - 180, "coin"),  # Para 1
@@ -138,22 +138,22 @@ levels = [
         ],
         'obstacles': [
             # Dikey engelleyiciler
-            (200, HEIGHT - 170, 50, 10),
-            (200, HEIGHT - 310, 50, 10),
-            (200, HEIGHT - 410, 50, 10),
+            (200, HEIGHT - 170, 50, 10, 'spikes'),
+            (200, HEIGHT - 310, 50, 10, 'spikes'),
+            (200, HEIGHT - 410, 50, 10, 'spikes'),
             
             # Üst platform engelleri
-            (550, 120, 10, 10),
-            (600, 120, 10, 10),
-            (650, 120, 10, 10),
-            (700, 120, 10, 10),
+            (550, 120, 10, 10, 'spikes'),
+            (600, 120, 10, 10, 'spikes'),
+            (650, 120, 10, 10, 'spikes'),
+            (700, 120, 10, 10, 'spikes'),
             
             # Düşen tuzaklar
-            (400, HEIGHT - 300, 20, 260),  # Dikine duvarlar
-            (700, HEIGHT - 250, 20, 210),
+            (400, HEIGHT - 300, 20, 260, 'spikes'),  # Dikine duvarlar
+            (700, HEIGHT - 250, 20, 210, 'spikes'),
             
             # Ölüm bölgesi
-            (420, HEIGHT - 80, 280, 40),  # Tuzak zemin
+            (420, HEIGHT - 80, 280, 40, 'spikes'),  # Tuzak zemin
         ],
         'collectibles': [
             # Dikey yoldaki paralar
