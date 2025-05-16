@@ -211,11 +211,11 @@ class Game:
             self.collectibles.add(c)
             
         # # Bitiş noktasını ayarla
-        # self.finish_pos = level_data['finish_pos']
+        self.finish_pos = level_data['finish_pos']
 
-        # Bitiş sandığını oluştur
-        self.chest = Chest(*level_data['finish_pos'])
-        self.all_sprites.add(self.chest)
+        # # Bitiş sandığını oluştur
+        # self.chest = Chest(*level_data['finish_pos'])
+        # self.all_sprites.add(self.chest)
         
     def run(self):
         """Oyun döngüsü"""
@@ -281,7 +281,7 @@ class Game:
             self.collect_sound.play()
             
         # Bitiş noktasına ulaşmayı kontrol et
-        '''if abs(self.player.pos.x - self.finish_pos[0]) < 20 and abs(self.player.pos.y - self.finish_pos[1]) < 20:
+        if abs(self.player.pos.x - self.finish_pos[0]) < 20 and abs(self.player.pos.y - self.finish_pos[1]) < 20:
             self.current_level += 1
             if self.current_level < len(levels):
                 self.load_level(self.current_level)
@@ -289,15 +289,15 @@ class Game:
                 # Oyunu bitir
                 self.game_over = True
                 self.playing = False
-                '''
-        # Bitiş sandığına ulaşmayı kontrol et
-        if self.chest.opened:  # Eğer sandık açıldıysa
-            self.current_level += 1
-            if self.current_level < len(levels):
-                self.load_level(self.current_level)
-            else:
-                self.game_over = True
-                self.playing = False
+                
+        # # Bitiş sandığına ulaşmayı kontrol et
+        # if self.chest.opened:  # Eğer sandık açıldıysa
+        #     self.current_level += 1
+        #     if self.current_level < len(levels):
+        #         self.load_level(self.current_level)
+        #     else:
+        #         self.game_over = True
+        #         self.playing = False
                 
         # Ekrandan düşmeyi kontrol et
         if self.player.pos.y > HEIGHT:
