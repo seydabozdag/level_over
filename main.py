@@ -1,7 +1,7 @@
 import pygame
 import sys
 import os
-from sprites import Player, Platform, Obstacle, Collectible
+from sprites import Player, Platform, Obstacle, Collectible ,Chest
 from settings import *
 try:
     from level import levels
@@ -221,9 +221,9 @@ class Game:
         # # Bitiş noktasını ayarla
         self.finish_pos = level_data['finish_pos']
 
-        # # Bitiş sandığını oluştur
-        # self.chest = Chest(*level_data['finish_pos'])
-        # self.all_sprites.add(self.chest)
+        # Bitiş sandığını oluştur
+        self.chest = Chest(*level_data['finish_pos'])
+        self.all_sprites.add(self.chest)
         
     def run(self):
         """Oyun döngüsü"""
@@ -293,8 +293,31 @@ class Game:
             self.collected_collectibles[self.current_level].add((hit.rect.x, hit.rect.y, "coin"))
 
             
-        # Bitiş noktasına ulaşmayı kontrol et
+        # # Bitiş noktasına ulaşmayı kontrol et
+        # if abs(self.player.pos.x - self.finish_pos[0]) < 20 and abs(self.player.pos.y - self.finish_pos[1]) < 20:
+        #     self.current_level += 1
+        #     if self.current_level < len(levels):
+        #         self.load_level(self.current_level)
+        #     else:
+        #         # Oyunu bitir
+        #         self.game_over = True
+        #         self.playing = False
+                
+         # Bitiş sandığına ulaşmayı kontrol et
         if abs(self.player.pos.x - self.finish_pos[0]) < 20 and abs(self.player.pos.y - self.finish_pos[1]) < 20:
+
+            if self.chest.opened:  # Eğer sandık açıldıysa
+                self.current_level += 1
+            if self.current_level < len(levels):
+                self.load_level(self.current_level)
+            else:
+                self.game_over = True
+                self.playing = False
+
+        # Oyuncu ile sandık çarpışmalarını kontrol et
+        hits = pygame.sprite.spritecollide(self.player, [self.chest], False)
+        if hits and not self.chest.opened:
+            self.chest.opened = True
             self.current_level += 1
             if self.current_level < len(levels):
                 self.load_level(self.current_level)
@@ -302,16 +325,9 @@ class Game:
                 # Oyunu bitir
                 self.game_over = True
                 self.playing = False
-                
-        # # Bitiş sandığına ulaşmayı kontrol et
-        # if self.chest.opened:  # Eğer sandık açıldıysa
-        #     self.current_level += 1
-        #     if self.current_level < len(levels):
-        #         self.load_level(self.current_level)
-        #     else:
-        #         self.game_over = True
-        #         self.playing = False
-                
+
+
+
         # Ekrandan düşmeyi kontrol et
         if self.player.pos.y > HEIGHT:
             self.death_sound.play()
@@ -323,10 +339,11 @@ class Game:
         self.screen.blit(self.background, (0, 0))
         self.all_sprites.draw(self.screen)
         
-        # Bitiş noktasını çiz
+        # # Bitiş noktasını çiz
         # pygame.draw.rect(self.screen, GREEN, 
-        #                  (self.finish_pos[0] - 15, self.finish_pos[1] - 15, 30, 30))
+        #                  (self.finish_pos[0] - 15, self.finish_pos[1] - 15, 30, 30)) # burda 
         
+                         
         # Skor ve ölüm sayısını göster
         score_text = self.font.render(f"Score: {self.score}", True, WHITE)
         deaths_text = self.font.render(f"Deaths: {self.deaths}", True, WHITE)

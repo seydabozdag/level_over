@@ -3,39 +3,61 @@ import os
 from settings import *
 vec = pygame.math.Vector2
 
-# class Chest(pygame.sprite.Sprite):
-#     def __init__(self, x, y):
-#         super().__init__()
-#         self.spritesheet = SpriteSheet(os.path.join('assets', 'chest.png'))  # Sandık sprite sheet
 
-#         # Animasyon kareleri (örneğe göre ayarla)
-#         self.frames = [
-#             self.spritesheet.get_image(0, 0, 32, 32),   # kapalı
-#             self.spritesheet.get_image(32, 0, 32, 32),  # açılıyor 1
-#             self.spritesheet.get_image(64, 0, 32, 32),  # açılıyor 2
-#             self.spritesheet.get_image(96, 0, 32, 32),  # tam açık
-#         ]
+'''
+class Chest(pygame.sprite.Sprite):
+    
+    def __init__(self, x, y):
+        super().__init__()
+        self.spritesheet = SpriteSheet(os.path.join('assets', 'chest1.png'))  # Sandık sprite sheet
+
+        # Animasyon kareleri (örneğe göre ayarla)
+        # self.frames = [
+        #     self.spritesheet.get_image ( 0, 0, 32, 32),(60,60) ,  # kapalı
+                                        
+        #     self.spritesheet.get_image(32, 0, 32, 32), (60,60), # açılıyor 1
+        #     self.spritesheet.get_image(64, 0, 32, 32),(60,60), # açılıyor 2
+        #     self.spritesheet.get_image(96, 0, 32, 32),(60,60)  # tam açık
+        # ]
+        self.frames = [
+    pygame.transform.scale(self.spritesheet.get_image(0, 0, 32, 32), (80, 80)),
+    pygame.transform.scale(self.spritesheet.get_image(32, 0, 32, 32), (80, 80)),
+    pygame.transform.scale(self.spritesheet.get_image(64, 0, 32, 32), (80, 80)),
+    pygame.transform.scale(self.spritesheet.get_image(96, 0, 32, 32), (80, 80)),
+]
         
-#         self.image = self.frames[0]
-#         self.rect = self.image.get_rect()
-#         self.rect.center = (x, y)
+        self.image = self.frames[0]
+        self.rect = self.image.get_rect()
+        self.rect.center = (x, y)
 
-#         self.frame_index = 0
-#         self.last_update = pygame.time.get_ticks()
-#         self.opened = False
+        self.frame_index = 0
+        self.last_update = pygame.time.get_ticks()
+        self.opened = False
+        self.loop = True  # Animasyonun döngüde kalmasını sağlar
 
-    # def update(self):
-    #     """Sandık animasyonu"""
-    #     if not self.opened:
-    #         now = pygame.time.get_ticks()
-    #         if now - self.last_update > 100:  # Her 100ms'de bir kare değiştir
-    #             self.last_update = now
-    #             self.frame_index += 1
-    #             if self.frame_index >= len(self.frames):
-    #                 self.frame_index = len(self.frames) - 1
-    #                 self.opened = True
-    #             self.image = self.frames[self.frame_index]
 
+    def update(self):
+        """Sandık animasyonu"""
+        # if not self.opened:
+        if not self.opened or self.loop:  # Sandık açıksa bile animasyon devam eder
+            now = pygame.time.get_ticks()
+            if now - self.last_update > 100:  # Her 100ms'de bir kare değiştir
+                self.last_update = now
+                self.frame_index += 1
+                if self.frame_index >= len(self.frames):
+                    self.frame_index = len(self.frames) - 1
+                    self.opened = True
+                self.image = self.frames[self.frame_index] # burda kare  
+'''
+class Chest(pygame.sprite.Sprite):
+    def __init__(self, x, y):
+        super().__init__()
+        # Tek bir sandık görseli yükle
+        self.image = pygame.image.load(os.path.join('assets', 'chest1.png')).convert_alpha()
+        self.image = pygame.transform.scale(self.image, (40, 40))  # İstersen boyutlandır
+        self.rect = self.image.get_rect()
+        self.rect.center = (x, y)
+        self.opened = False  # Sandığın açılıp açılmadığını tutar              
 class SpriteSheet:
     """Sprite sheet sınıfı animasyonlar için"""
     def __init__(self, filename):
