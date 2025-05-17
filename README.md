@@ -4,7 +4,10 @@ Bu proje, CENG 220 dersi kapsamında geliştirilen Level Devil tarzı, 2 boyutlu
 
 ## 📌 Oyun Hakkında
 
-Oyunda amaç, oyuncunun farkında olmadan değişen platformlar ve tuzaklarla dolu seviyeleri tamamlamasıdır. Oyuncunun refleksleri, dikkat seviyesi ve ezber yeteneği test edilir.
+ Oyunda amaç, oyuncunun farkında olmadan değişen platformlar ve tuzaklarla dolu seviyeleri tamamlamasıdır. Oyuncunun refleksleri, dikkat seviyesi ve ezber yeteneği test edilir.
+Oyunda kullanılan tuşlar :
+-- Zıplamak için Space tuşu 
+-- Hareket için sağ sol tuşları 
 
 - Geliştiriciler: Ayşe Semra YASLAN, Selimhan TOKAT, Şeyda BOZDAĞ
 - Programlama Dili: Python
@@ -13,7 +16,7 @@ Oyunda amaç, oyuncunun farkında olmadan değişen platformlar ve tuzaklarla do
 
 ## 🎮 Oynanıştan Görseller
 
-### Başlangıç Ekranı
+### Başlangıç Ekranı 
 ![Başlangıç](assets/start_screen.png)
 
 ### Oyun İçi Görüntü
