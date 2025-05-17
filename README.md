@@ -14,7 +14,7 @@ Oyunda amaç, oyuncunun farkında olmadan değişen platformlar ve tuzaklarla do
 ## 🎮 Oynanıştan Görseller
 
 ### Başlangıç Ekranı
-![Başlangıç](assets\start_screen.png)
+![Başlangıç](assets/start_screen.png)
 
 ### Oyun İçi Görüntü
 ![Oyun İçi](assets/level1.png)
