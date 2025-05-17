@@ -176,7 +176,8 @@ class Game:
         """Yeni oyun başlatır"""
         self.score = 0
         self.deaths = 0
-        self.current_level = 0 
+        self.current_level = 0
+        self.collected_collectibles = {}
         self.load_level(self.current_level)
         self.run()
     def load_level(self, level_index):
