@@ -22,6 +22,10 @@ Oyunda kullanılan tuşlar :
 ### Oyun İçi Görüntü
 ![Oyun İçi](assets/level1.png)
 
+### Oyun Sonu Görüntüsü
+![Oyun Sonu](assets/game_over.png)
+
+
 ## 🔧 Kurulum ve Çalıştırma
 
 ```bash
