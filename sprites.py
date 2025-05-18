@@ -56,7 +56,7 @@ class Chest(pygame.sprite.Sprite):
         self.image = pygame.image.load(os.path.join('assets', 'chest1.png')).convert_alpha()
         self.image = pygame.transform.scale(self.image, (40, 40))  # İstersen boyutlandır
         self.rect = self.image.get_rect()
-        self.rect.center = (x, y)
+        self.rect.center = (x, y+3)
         self.opened = False  # Sandığın açılıp açılmadığını tutar              
 class SpriteSheet:
     """Sprite sheet sınıfı animasyonlar için"""
